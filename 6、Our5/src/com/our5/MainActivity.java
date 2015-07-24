@@ -18,7 +18,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -36,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
 	private boolean isNeedShowDialog = true;
 	
 	private ListView yijiankaiqiList;
-	//主界面的list
+	//涓荤晫闈㈢殑list
 	private List<Map<String, Object>> needList = new ArrayList<Map<String,Object>>();
 	
 	MyListViewBaseAdapter myListViewBaseAdapter;
@@ -48,11 +47,11 @@ public class MainActivity extends ActionBarActivity {
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			if(msg.what == 11) {
-				//开启主界面
+				//寮�惎涓荤晫闈�
 				myListViewBaseAdapter = new MyListViewBaseAdapter(MainActivity.this, needList, sharedPreferences);
 				yijiankaiqiList.setAdapter(myListViewBaseAdapter);
 			} else if(msg.what == 22) {
-				//开启左边界面
+				//寮�惎宸﹁竟鐣岄潰
 				refreshListItems();
 				
 			}
@@ -73,9 +72,9 @@ public class MainActivity extends ActionBarActivity {
 	private void init() {
 		mLeftMenu = (SlidingMenu) findViewById(R.id.id_menu);
 		mLeftMenu.mainActivity = this;
-		//隐藏android系统底部的menu导航栏
+		//闅愯棌android绯荤粺搴曢儴鐨刴enu瀵艰埅鏍�
 		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-		//获取SlidingMenu中的GridView
+		//鑾峰彇SlidingMenu涓殑GridView
 		gridView = (GridView) findViewById(R.id.list_home);
 		sharedPreferences = getSharedPreferences("config", Context.MODE_PRIVATE);
 		
@@ -93,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
 		count = needList.size();
 		if (count != 0) {
 			Intent intent = packageManager.getLaunchIntentForPackage((String) needList.get(0).get("packageName"));
-			// 如果该程序不可启动（像系统自带的包，有很多是没有入口的）会返回NULL
+			// 濡傛灉璇ョ▼搴忎笉鍙惎鍔紙鍍忕郴缁熻嚜甯︾殑鍖咃紝鏈夊緢澶氭槸娌℃湁鍏ュ彛鐨勶級浼氳繑鍥濶ULL
 			if (intent != null)
 				startActivity(intent);
 		}
@@ -104,17 +103,17 @@ public class MainActivity extends ActionBarActivity {
 		super.onRestart();
 		count--;
 		if (count == 1) {
-			// 取到点击的包名
+			// 鍙栧埌鐐瑰嚮鐨勫寘鍚�
 			Intent i1 = packageManager.getLaunchIntentForPackage((String) needList.get(1).get("packageName"));
-			// 如果该程序不可启动（像系统自带的包，有很多是没有入口的）会返回NULL
+			// 濡傛灉璇ョ▼搴忎笉鍙惎鍔紙鍍忕郴缁熻嚜甯︾殑鍖咃紝鏈夊緢澶氭槸娌℃湁鍏ュ彛鐨勶級浼氳繑鍥濶ULL
 			if (i1 != null) {
 				startActivity(i1);
 			}
 
 		} else if (count > 0) {
-			// 取到点击的包名
+			// 鍙栧埌鐐瑰嚮鐨勫寘鍚�
 			Intent intent = packageManager.getLaunchIntentForPackage((String) needList.get(count).get("packageName"));
-			// 如果该程序不可启动（像系统自带的包，有很多是没有入口的）会返回NULL
+			// 濡傛灉璇ョ▼搴忎笉鍙惎鍔紙鍍忕郴缁熻嚜甯︾殑鍖咃紝鏈夊緢澶氭槸娌℃湁鍏ュ彛鐨勶級浼氳繑鍥濶ULL
 			if (intent != null) {
 				startActivity(intent);
 				new Thread() {
@@ -154,7 +153,7 @@ public class MainActivity extends ActionBarActivity {
 	
 	
 	public void startRight() {
-		//主界面运行的线程
+		//涓荤晫闈㈣繍琛岀殑绾跨▼
 		new Thread() {
 			@Override
 			public void run() {
@@ -187,7 +186,7 @@ public class MainActivity extends ActionBarActivity {
 		
 		while (l.hasNext()) {
 			ApplicationInfo app = (ApplicationInfo) l.next();
-			//如果非系统应用，则添加至appList
+			//濡傛灉闈炵郴缁熷簲鐢紝鍒欐坊鍔犺嚦appList
 			if((app.flags&ApplicationInfo.FLAG_SYSTEM)==0) {
 				String packageName = app.packageName;
 				Map<String, Object> map = new HashMap<String, Object>();
